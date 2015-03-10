@@ -1,0 +1,14 @@
+{
+  "jim": {
+    "screenName": "jim",
+    "balance": 50
+  },
+  "dylan": {
+    "screenName": "dylan",
+    "balance": 100
+  },
+  "melvin": {
+    "screenName": "melvin",
+    "balance": 30
+  }
+}
