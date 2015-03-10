@@ -1,0 +1,35 @@
+{
+  "name": "nodejs-cajanegra",
+  "version": "0.01",
+  "description": "My black box project",
+  "keywords": [
+    "OpenShift",
+    "Node.js",
+    "application",
+    "openshift"
+  ],
+  "author": {
+    "name": "James Carlson",
+    "email": "jxxcarlson@gmail.com",
+    "url":  "http://www.noteshare.io"
+  },
+  "homepage": "http://www.noteshare.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jxxcarlson/cajanegra"
+  },
+
+  "engines": {
+    "node": ">= 0.6.0",
+    "npm": ">= 1.0.0"
+  },
+
+  "dependencies": {
+
+  },
+  "devDependencies": {},
+  "bundleDependencies": [],
+
+  "private": true,
+  "main": "index.js"
+}
