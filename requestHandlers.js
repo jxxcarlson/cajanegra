@@ -63,10 +63,10 @@ function show(response) {
   fs.createReadStream("/tmp/test.png").pipe(response);
 }
 
-function app(query, response) {
-  console.log("Request handler 'app' was called with args " + query);
+function hello(query, response) {
+  console.log("Request handler 'hello' was called");
   response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("app called with query: " + query);
+  response.write("Yes, I am alive. Thankyou.")
   response.end();
 
 }
@@ -75,9 +75,9 @@ function add(query, response) {
   console.log("Request handler 'add' was called with args " + query);
 
   var hash = queryHash(query);
-  var userName = hash["user"];
+  var userName = hash["arg1"];
   var amount = 0
-  if (hash["amount"]){
+  if (hash["arg2"]){
     amount = parseFloat(hash["amount"]);
   }
   if (users[userName]) {
@@ -102,7 +102,7 @@ function balance(query, response) {
   console.log("Request handler 'balance' was called with args " + query);
 
   var hash = queryHash(query);
-  var userName = hash["user"];
+  var userName = hash["arg1"];
   var sessionUser = users[userName];
   var balance = sessionUser.balance;
 
@@ -116,8 +116,8 @@ function set(query, response) {
   console.log("Request handler 'set' was called with args " + query);
 
   var hash = queryHash(query);
-  var userName = hash["user"];
-  var amount = parseFloat(hash["amount"]);
+  var userName = hash["arg1"];
+  var amount = parseFloat(hash["arg2"]);
   var sessionUser = users[userName];
   var balance = sessionUser.balance = amount
 
@@ -136,8 +136,8 @@ function credit(query, response) {
   console.log("Request handler 'credit' was called with args " + query);
 
   var hash = queryHash(query);
-  var userName = hash["user"];
-  var amount = parseFloat(hash["amount"]);
+  var userName = hash["arg1"];
+  var amount = parseFloat(hash["arg2"]);
   var sessionUser = users[userName];
   var balance = sessionUser.credit(amount)
 
@@ -155,8 +155,8 @@ function debit(query, response) {
   console.log("Request handler 'debit' was called with args " + query);
 
   var hash = queryHash(query);
-  var userName = hash["user"];
-  var amount = parseFloat(hash["amount"]);
+  var userName = hash["arg1"];
+  var amount = parseFloat(hash["arg2"]);
   var sessionUser = users[userName];
   var balance = sessionUser.debit(amount)
 
@@ -173,7 +173,8 @@ function debit(query, response) {
 exports.start = start;
 exports.upload = upload;
 exports.show = show;
-exports.app = app;
+
+exports.hello = hello;
 exports.add = add;
 exports.set = set;
 exports.balance = balance;

@@ -5,10 +5,14 @@
   },
   "dylan": {
     "screenName": "dylan",
-    "balance": 100
+    "balance": 127
   },
   "melvin": {
     "screenName": "melvin",
     "balance": 30
+  },
+  "linda": {
+    "screenName": "linda",
+    "balance": 60
   }
 }

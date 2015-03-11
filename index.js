@@ -39,7 +39,8 @@ handle["/"] = requestHandlers.start
 handle["/start"] = requestHandlers.start;
 handle["/upload"] = requestHandlers.upload;
 handle["/show"] = requestHandlers.show;
-handle["/app"] = requestHandlers.app;
+
+handle["/hello"] = requestHandlers.hello;
 handle["/credit"] = requestHandlers.credit;
 handle["/debit"] = requestHandlers.debit;
 handle["/balance"] = requestHandlers.balance;
