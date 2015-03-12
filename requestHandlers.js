@@ -25,7 +25,10 @@ function start(response) {
 }
 
 function queryHash(queryString) {
-
+  
+  if (queryString == null) { 
+    return {}
+  }
   queryString = queryString.replace(/%22/g, "");
   queries = queryString.split(";");
   hash = {}
@@ -101,72 +104,86 @@ function add(query, response) {
 function balance(query, response) {
   console.log("Request handler 'balance' was called with args " + query);
 
+  response.writeHead(200, {"Content-Type": "text/plain"});
+
   var hash = queryHash(query);
   var userName = hash["arg1"];
   var sessionUser = users[userName];
-  var balance = sessionUser.balance;
+  if (sessionUser) {
+    var balance = sessionUser.balance;
+    response.write("Balance for " + userName + ": " + balance);
+  } else {
+    response.write("Error: no such user");
+  }
 
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("Balance for " + userName + ": " + balance);
   response.end();
 
 }
 
 function set(query, response) {
   console.log("Request handler 'set' was called with args " + query);
+  response.writeHead(200, {"Content-Type": "text/plain"});
 
   var hash = queryHash(query);
   var userName = hash["arg1"];
   var amount = parseFloat(hash["arg2"]);
   var sessionUser = users[userName];
-  var balance = sessionUser.balance = amount
+  if (sessionUser && amount) {
+    var balance = sessionUser.balance = amount
+    response.write("New balance for " + userName + ": " + balance);
+    jf.writeFile("./data.json", users, function(err) {
+      console.log(err)
+    })
 
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("New balance for " + userName + ": " + balance);
+  } else {
+      response.write("Error: no such user or no amount");
+  }
   response.end();
-
-  jf.writeFile("./data.json", users, function(err) {
-    console.log(err)
-  })
-
 }
 
 
 function credit(query, response) {
   console.log("Request handler 'credit' was called with args " + query);
+  response.writeHead(200, {"Content-Type": "text/plain"});
 
   var hash = queryHash(query);
   var userName = hash["arg1"];
   var amount = parseFloat(hash["arg2"]);
   var sessionUser = users[userName];
-  var balance = sessionUser.credit(amount)
 
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("New balance for " + userName + ": " + balance);
+  if (sessionUser && amount) {
+    var balance = sessionUser.credit(amount)
+    response.write("New balance for " + userName + ": " + balance);
+    jf.writeFile("./data.json", users, function(err) {
+      console.log(err)
+      })
+  } else {
+      response.write("Error:either the user or the amount is not defined:");
+  }
   response.end();
-
-  jf.writeFile("./data.json", users, function(err) {
-    console.log(err)
-  })
-
 }
+
 
 function debit(query, response) {
   console.log("Request handler 'debit' was called with args " + query);
+  response.writeHead(200, {"Content-Type": "text/plain"});
 
   var hash = queryHash(query);
   var userName = hash["arg1"];
   var amount = parseFloat(hash["arg2"]);
-  var sessionUser = users[userName];
-  var balance = sessionUser.debit(amount)
 
-  response.writeHead(200, {"Content-Type": "text/plain"});
+  if (sessionUser && amount) {
+    var sessionUser = users[userName];
+    var balance = sessionUser.debit(amount)
+    jf.writeFile("./data.json", users, function(err) {
+      console.log(err)
+    })
+  }
+
   response.write("New balance for " + userName + ": " + balance);
   response.end();
 
-  jf.writeFile("./data.json", users, function(err) {
-    console.log(err)
-  })
+
 
 }
 
