@@ -1,6 +1,7 @@
 var server = require("./server");
 var router = require("./router");
 var requestHandlers = require("./requestHandlers");
+var moment = require('moment');
 
 var fs = require('fs');
 var jf = require("jsonfile")
@@ -9,8 +10,10 @@ var AWS = require("aws-sdk");
 
 
 user = require("./user")
+users = {}
+keyvalue= {}
 
-jf.readFile("./data.json", function(err, obj) {
+jf.readFile("./users.json", function(err, obj) {
   console.log(util.inspect(obj));
   users = {};
   for (k in obj) {
@@ -22,6 +25,21 @@ jf.readFile("./data.json", function(err, obj) {
   }
 
 })
+
+jf.readFile("./keyvalue.json", function(err, obj) {
+  now = moment();
+  console.log("now: ", now.format());
+  console.log("keyvalue.json:");
+  console.log(util.inspect(obj));
+  console.log("--------------------");
+  keyvalue = obj;
+  keyvalue["server_start_time"] = JSON.stringify(now);
+})
+
+
+// now = moment();
+// keyvalue["server_start_time"] = JSON.stringify(now);
+//jf.writeFile("./keyvalue.json", keyvalue, function(err) {})
 
 /*
 var jim = new user("jim", 10.23)
@@ -47,6 +65,10 @@ handle["/balance"] = requestHandlers.balance;
 handle["/set"] = requestHandlers.set;
 handle["/add"] = requestHandlers.add;
 
+handle["/get"] = requestHandlers.get;
+handle["/put"] = requestHandlers.put;
+
+handle["/uptime"] = requestHandlers.uptime;
 
 
 server.start(router.route, handle);
