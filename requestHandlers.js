@@ -69,7 +69,7 @@ function show(response) {
 
 function hello(query, response) {
   console.log("Request handler 'hello' was called");
-  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Origin": "http://www.noteshare.io"});
   response.write("Yes, I am alive. Thankyou.")
   response.end();
 
@@ -104,8 +104,8 @@ function add(query, response) {
 
 function balance(query, response) {
   console.log("Request handler 'balance' was called with args " + query);
-
-  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Origin": "http://www.noteshare.io"});
+  //8 response.writeHead(200, {"Content-Type": "text/plain"});
 
   var hash = queryHash(query);
   var userName = hash["arg1"];
@@ -119,11 +119,12 @@ function balance(query, response) {
 
   response.end();
 
+
 }
 
 function set(query, response) {
   console.log("Request handler 'set' was called with args " + query);
-  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Origin": "http://www.noteshare.io"});
 
   var hash = queryHash(query);
   var userName = hash["arg1"];
